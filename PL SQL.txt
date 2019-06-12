@@ -80,7 +80,15 @@ for i in 1..3 loop
 end loop outer_loop;
 end;
 /
-
+i is 1 and j is 7
+i is 1 and j is 8
+i is 1 and j is 9
+i is 2 and j is 7
+i is 2 and j is 8
+i is 2 and j is 9
+i is 3 and j is 7
+i is 3 and j is 8
+i is 3 and j is 9
 
 ##############
 Q-- Show looping with conditions;
@@ -102,3 +110,49 @@ for i in 1..3 loop
 end loop outer_loop;
 end;
 /
+
+i is 1
+i is 1
+i is 1
+j is 1
+i is 2
+i is 2
+j is 1
+j is 2
+i is 3
+
+
+##############
+Q-- Show looping with conditions (elsif);
+##############
+declare
+i number(2);
+j number(2);
+begin
+<<outer_loop>>
+for i in 1..3 loop
+   <<inner_loop>>
+   for j in 1..3 loop
+     if(i>j) then 	
+     	dbms_output.put_line('j is '||j);
+     elsif(i=j) then 	
+     	dbms_output.put_line('Result is equal' || i);
+     
+     else
+	dbms_output.put_line('i is '||i);
+     end if;	
+   end loop inner_loop;
+end loop outer_loop;
+end;
+/
+
+
+Result is equal1
+i is 1
+i is 1
+j is 1
+Result is equal2
+i is 2
+j is 1
+j is 2
+Result is equal3
