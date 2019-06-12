@@ -436,19 +436,19 @@ end;
 ##############
 Q-- using implicit cursor update salaries of all workers by 3000;
 ##############
-SQL> declare
-  2  norows number(2);
-  3  begin
-  4  update worker set sal=sal+10000;
-  5  if(sql%notfound) then
-  6  dbms_output.put_line('not returned any rows');
-  7
-  8  elsif(sql%found)then
-  9  norows:=sql%rowcount;
- 10  dbms_output.put_line(norows ||''||'updated');
- 11  end if;
- 12  end;
- 13  /
-3updated
 
-PL/SQL procedure successfully completed.
+declare 
+norows number(2);
+begin
+update worker set sal=sal+10000;
+if(sql%notfound) then
+dbms_output.put_line('not returned any rows');
+
+elsif(sql%found)then
+norows:=sql%rowcount;
+dbms_output.put_line(norows ||''||'updated');
+end if;
+end;
+/
+
+################################## Done till cursors ######################################
