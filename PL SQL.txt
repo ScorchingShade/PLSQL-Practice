@@ -578,3 +578,35 @@ new   2: a number(2):=6;
 36
 
 PL/SQL procedure successfully completed.
+
+##############
+Q-- stored function prime number
+##############
+declare
+input number(2):=&n;
+i number(2);
+flag number(1):=0;
+procedure prime(x in number) is
+begin
+declare
+flag number(1):=0;
+begin
+for i in 2..x/2 loop
+      if(mod(x,i)=0) then
+        flag:=1;
+        exit;
+       end if;
+end loop;
+if flag = 0
+    then
+        dbms_output.put_line('true'); 
+    else
+        dbms_output.put_line('false'); 
+    end if; 
+end;
+
+end;
+begin
+prime(input);
+end;
+/
