@@ -179,3 +179,82 @@ new   2: n1 number(2):=1;
 Choice 1
 
 PL/SQL procedure successfully completed.
+
+##############
+Q-- Create table worker with  id , name and salary. then use sql and plsql to update the table accordingly
+##############
+
+
+SQL> create table worker(id number(3), name varchar2(10), sal number(5));
+
+Table created.
+
+SQL> insert into worker values(&id, '&name', &sal);
+Enter value for id: 1
+Enter value for name: rakesh
+Enter value for sal: 2000
+old   1: insert into worker values(&id, '&name', &sal)
+new   1: insert into worker values(1, 'rakesh', 2000)
+
+1 row created.
+
+SQL> /
+Enter value for id: 2
+Enter value for name: reema
+Enter value for sal: 2000
+old   1: insert into worker values(&id, '&name', &sal)
+new   1: insert into worker values(2, 'reema', 2000)
+
+1 row created.
+
+
+
+SQL> /
+Enter value for id: 3
+Enter value for name: Kiran
+Enter value for sal: 3500
+old   1: insert into worker values(&id, '&name', &sal)
+new   1: insert into worker values(3, 'Kiran', 3500)
+
+1 row created.
+
+SQL>
+SQL> select * from worker;
+
+        ID NAME              SAL
+---------- ---------- ----------
+         1 rakesh           2000
+         2 reema            2000
+         3 Kiran            3500
+
+
+declare
+id1 worker.id%type:=1;
+sal1 worker.sal%type;
+begin
+select sal into sal1 from worker
+where id=id1;
+if(sal1 < 2000) then
+update worker
+set sal = sal+1000
+where id=id1;
+dbms_output.put_line(id1);
+end if;
+end;
+/
+
+1
+
+PL/SQL procedure successfully completed.
+
+
+SQL> select * from worker;
+
+        ID NAME              SAL
+---------- ---------- ----------
+         1 rakesh           2400
+         2 reema            2000
+         3 Kiran            3500
+
+SQL>
+
