@@ -10,3 +10,24 @@ SQL> declare
   6  end;
   7  /
 LTIwelcome to plsql
+-----------------------------------------------------------------------------------------
+
+##############
+Q-- find power of two numbers by reading data from user.
+##############
+SQL> declare
+  2  n1 number(3):=&a;
+  3  n2 number(3):=&b;
+  4  c number(3):=0;
+  5  begin
+  6  c:=n1**n2;
+  7  dbms_output.put_line(c);
+  8  end;
+  9  /
+Enter value for a: 2
+old   2: n1 number(3):=&a;
+new   2: n1 number(3):=2;
+Enter value for b: 2
+old   3: n2 number(3):=&b;
+new   3: n2 number(3):=2;
+4
