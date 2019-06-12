@@ -258,3 +258,41 @@ SQL> select * from worker;
 
 SQL>
 
+
+##############
+Q-- Show looping with while and normal loop;
+##############
+SQL> declare
+  2  a number(2):=10;
+  3  begin loop
+  4  dbms_output.put_line(a);
+  5  a:=a+10;
+  6  if(a>50) then
+  7  exit;
+  8  end if;
+  9  end loop;
+ 10  end;
+ 11  /
+10
+20
+30
+40
+50
+
+PL/SQL procedure successfully completed.
+SQL> declare
+  2  a number(2):=10;
+  3  begin
+  4  while(a<50)
+  5  loop
+  6  dbms_output.put_line(a);
+  7  a:=a+10;
+  8  end loop;
+  9  end;
+ 10  /
+10
+20
+30
+40
+
+PL/SQL procedure successfully completed.
