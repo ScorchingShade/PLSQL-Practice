@@ -333,4 +333,102 @@ new   5: input number(2) := 6;
 8
 13
 
+
+##############
+Q-- Subtring
+##############
+SQL> declare
+  2  input varchar2(100):='&s';
+  3  res varchar2(100);
+  4  st number(2);
+  5  ed number(2);
+  6  begin
+  7  dbms_output.put_line('Start point:');
+  8  st:= &st1;
+  9  dbms_output.put_line('End point:');
+ 10  ed:= &ed1;
+ 11
+ 12  res:=res||substr(input,st,ed);
+ 13  dbms_output.put_line(res);
+ 14  end;
+ 15  /
+Enter value for s: hello
+old   2: input varchar2(100):='&s';
+new   2: input varchar2(100):='hello';
+Enter value for st1: 1
+old   8: st:= &st1;
+new   8: st:= 1;
+Enter value for ed1: 3
+old  10: ed:= &ed1;
+new  10: ed:= 3;
+Start point:
+End point:
+hel
+
+##############
+Q-- reverse substring
+##############
 PL/SQL procedure successfully completed.
+SQL> declare
+  2  str1 varchar2(50):='&str';
+  3  str2 varchar2(50);
+  4  len number;
+  5  i number;
+  6
+  7  begin
+  8  len:=length(str1);
+  9
+ 10  for i in reverse 1..len
+ 11  loop
+ 12  str2:=str2 || substr(str1,i,1);
+ 13  end loop;
+ 14
+ 15  dbms_output.put_line('Reverse of String is:'||str2);
+ 16  end;
+ 17  /
+Enter value for str: herlo
+old   2: str1 varchar2(50):='&str';
+new   2: str1 varchar2(50):='herlo';
+Reverse of String is:olreh
+
+PL/SQL procedure successfully completed.
+
+##############
+Q-- pattern
+##############
+
+declare
+i number(2);
+j number(2);
+begin
+for i in 1..5 loop
+   for j in 1..i loop
+     dbms_output.put('*');
+   end loop;
+dbms_output.new_line();
+end loop;
+end;
+/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+##############
+Q-- array
+##############
+
+
+declare 
+type markarray is varray(5) of integer;
+type gradearray is varray(5) of varchar(10);
+gd gradearray;
+mr markarray;
+total number(4);
+i number(3);
+
+begin
+gd:=gradearray('a','b','c','d','e');
+mr:=markarray(22,55,87,44,77);
+total:=gd.count;
+for i in 1..total loop
+dbms_output.put_line(gd(i)||' '||mr(i));
+end loop;
+end;
