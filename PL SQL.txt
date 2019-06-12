@@ -31,3 +31,74 @@ Enter value for b: 2
 old   3: n2 number(3):=&b;
 new   3: n2 number(3):=2;
 4
+
+-----------------------------------------------------------------------------------------
+
+##############
+Q-- find sum of two vars ( declaring local var)
+##############
+
+SQL> declare
+  2  n1 number(3):=&a;
+  3  n2 number(3):=&b;
+  4  begin
+  5  dbms_output.put_line('Declaring local variable');
+  6  declare
+  7  c number(3):=0;
+  8  begin
+  9  c:=n1+n2;
+ 10  dbms_output.put_line('The sum of ' ||n1||' and '||n2|| ' is '|| c);
+ 11  end;
+ 12  end;
+ 13  /
+Enter value for a: 2
+old   2: n1 number(3):=&a;
+new   2: n1 number(3):=2;
+Enter value for b: 2
+old   3: n2 number(3):=&b;
+new   3: n2 number(3):=2;
+Declaring local variable
+The sum of 2 and 2 is 4
+
+PL/SQL procedure successfully completed.
+
+
+##############
+Q-- Show looping
+##############
+
+declare
+i number(2);
+j number(2);
+begin
+<<outer_loop>>
+for i in 1..3 loop
+   <<inner_loop>>
+   for j in 7..9 loop
+     dbms_output.put_line('i is '||i||' and j is '||j);
+   end loop inner_loop;
+end loop outer_loop;
+end;
+/
+
+
+##############
+Q-- Show looping with conditions;
+##############
+declare
+i number(2);
+j number(2);
+begin
+<<outer_loop>>
+for i in 1..3 loop
+   <<inner_loop>>
+   for j in 1..3 loop
+     if(i>j) then 	
+     	dbms_output.put_line('j is '||j);
+     else
+	dbms_output.put_line('i is '||i);
+     end if;	
+   end loop inner_loop;
+end loop outer_loop;
+end;
+/
