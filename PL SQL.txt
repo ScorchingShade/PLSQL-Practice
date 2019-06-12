@@ -278,7 +278,9 @@ SQL> declare
 30
 40
 50
-
+##############
+Q-- Show looping with while and normal loop
+##############
 PL/SQL procedure successfully completed.
 SQL> declare
   2  a number(2):=10;
@@ -294,5 +296,41 @@ SQL> declare
 20
 30
 40
+
+PL/SQL procedure successfully completed.
+
+##############
+Q-- Show looping with while and display fibonnacci series
+##############
+SQL> declare
+  2  a number(2) := 0;
+  3  b number(3) := 1;
+  4  res number(3);
+  5  input number(2) := &n;
+  6  anchor number(2):=0;
+  7  begin
+  8  dbms_output.put_line(a);
+  9  dbms_output.put_line(b);
+ 10  while(anchor<input)
+ 11  loop
+ 12  res:=a+b;
+ 13  a:=b;
+ 14  b:=res;
+ 15  dbms_output.put_line(res);
+ 16  anchor:=anchor+1;
+ 17  end loop;
+ 18  end;
+ 19  /
+Enter value for n: 6
+old   5: input number(2) := &n;
+new   5: input number(2) := 6;
+0
+1
+1
+2
+3
+5
+8
+13
 
 PL/SQL procedure successfully completed.
