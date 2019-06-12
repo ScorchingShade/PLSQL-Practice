@@ -156,3 +156,26 @@ i is 2
 j is 1
 j is 2
 Result is equal3
+
+##############
+Q-- Show case condition
+##############
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  n1 number(2):=&a;
+  3  begin
+  4  case n1
+  5  when 1 then dbms_output.put_line('Choice ' || n1);
+  6  when 2 then dbms_output.put_line('Choice ' || n1);
+  7  when 3 then dbms_output.put_line('Choice ' || n1);
+  8  else dbms_output.put_line('No Choice');
+  9  end case;
+ 10  end;
+ 11  /
+Enter value for a: 1
+old   2: n1 number(2):=&a;
+new   2: n1 number(2):=1;
+Choice 1
+
+PL/SQL procedure successfully completed.
