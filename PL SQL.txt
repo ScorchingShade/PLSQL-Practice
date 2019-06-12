@@ -1,0 +1,12 @@
+// Basics
+
+SQL> set serveroutput on
+
+SQL> declare
+  2  name varchar2(100);
+  3  begin
+  4  name:='welcome to plsql';
+  5  dbms_output.put_line('LTI'|| name);
+  6  end;
+  7  /
+LTIwelcome to plsql
