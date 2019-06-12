@@ -477,3 +477,22 @@ SQL> declare
 3Kiran13500
 
 PL/SQL procedure successfully completed.
+
+
+##############
+Q-- standalone procedure
+##############
+SQL> create or replace procedure greeting
+  2  as
+  3  begin
+  4  dbms_output.put_line('welcome');
+  5  end;
+  6  /
+
+Procedure created.
+
+SQL> execute greeting
+welcome
+
+PL/SQL procedure successfully completed.
+
