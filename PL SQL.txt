@@ -1,4 +1,4 @@
-// Basics
+x// Basics
 
 SQL> set serveroutput on
 
@@ -496,3 +496,30 @@ welcome
 
 PL/SQL procedure successfully completed.
 
+
+##############
+Q-- stored procedure with params
+##############
+
+SQL> declare
+  2  a number(2);
+  3  b number(2);
+  4  c number(2);
+  5  procedure findmin(x in number, y in number, z out number) is
+  6  begin
+  7  if(x<y) then
+  8  z:=x;
+  9  else
+ 10  z:=y;
+ 11  end if;
+ 12  end;
+ 13  begin
+ 14  a:=10;
+ 15  b:=20;
+ 16  findmin(a,b,c);
+ 17  dbms_output.put_line('Min number is: ' || c);
+ 18  end;
+ 19  /
+Min number is: 10
+
+PL/SQL procedure successfully completed.
