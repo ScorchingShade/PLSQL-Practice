@@ -155,3 +155,22 @@ sorry1
 PL/SQL procedure successfully completed.
 
 ------------------------------------------
+###########
+print id , name from worker table where id does not exists
+###########
+
+declare
+id1 worker.id%type:=5;
+name1 worker.name%type;
+begin
+select name into name1 from worker where id=id1;
+exception
+when no_data_found then
+dbms_output.put_line('Sorry no record exists');
+end;
+/
+
+###output###
+Sorry no record exists
+
+PL/SQL procedure successfully completed.
