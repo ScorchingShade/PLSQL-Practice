@@ -367,3 +367,16 @@ DT        USERNAME
 14-MAY-19 Rashmi
 13-JUN-19 SYSTEM
 13-JUN-19 SYSTEM
+
+
+-------------------------------------------------------------
+###########
+Package specs
+###########
+
+SQL> create package work_sal as
+  2   procedure salcal(id1 worker.id%type);
+  3  end work_sal;
+  4  /
+
+Package created.
