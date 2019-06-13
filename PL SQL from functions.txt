@@ -403,3 +403,34 @@ SQL> begin
   3  end;
   4  /
 13500
+-------------------------------------------------------------
+
+###########
+Associative array
+###########
+```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+
+  1  declare
+  2  type sal_list is table of integer index by varchar2(20);
+  3  salcoll sal_list;
+  4  name varchar2(20);
+  5  begin
+  6  salcoll('jai'):=30000;
+  7  salcoll('raj'):=20000;
+  8  salcoll('arun'):=21000;
+  9  salcoll('amar'):=12000;
+ 10  name:=salcoll.first;
+ 11  while name is not null
+ 12  loop
+ 13  dbms_output.put_line('salary of '||name||' is '||salcoll(name));
+ 14  name:=salcoll.next(name);
+ 15  end loop;
+ 16* end;
+SQL> /
+salary of amar is 12000
+salary of arun is 21000
+salary of jai is 30000
+salary of raj is 20000
+
+PL/SQL procedure successfully completed.
+-------------------------------------------------------------
