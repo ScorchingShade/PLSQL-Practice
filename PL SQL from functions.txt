@@ -380,3 +380,26 @@ SQL> create package work_sal as
   4  /
 
 Package created.
+
+###########
+Package body
+###########
+
+create or replace package body work_sal as
+procedure salcal(id1 worker.id%type) is
+salary worker.sal%type;
+begin
+select sal into salary from  worker
+where id=id1;
+dbms_output.put_line(salary);
+end salcal;
+end work_sal;
+/
+
+Package body created.
+
+SQL> begin
+  2  work_sal.salcal(3);
+  3  end;
+  4  /
+13500
