@@ -1,0 +1,68 @@
+#####################
+Count number of rows of worker table function
+#####################
+SQL> create or replace function no_of_rows
+  2  return number is
+  3  total number(2):=0;
+  4  begin
+  5  select count(*) into total
+  6  from worker;
+  7  return total;
+  8  end;
+  9  /
+
+Function created.
+
+SQL> declare
+  2  count1 number(3):=0;
+  3  begin
+  4  count1:=no_of_rows;
+  5  dbms_output.put_line(count1);
+  6  end;
+  7  /
+4
+
+PL/SQL procedure successfully completed.
+
+------------------------------------------
+
+
+#####################
+Count number of rows of worker table
+#####################
+
+SQL> create or replace function max1(x in number, y in number)
+  2  return number is
+  3  maximum number(2):=0;
+  4  begin
+  5  if(x>y) then
+  6  maximum:=x;
+  7  else
+  8  maximum:=y;
+  9  end if;
+ 10  return maximum;
+ 11  end;
+ 12  /
+
+Function created.
+
+SQL> declare
+  2  a number(2):=&a;
+  3  b number(2):=&b;
+  4  c number(2):=0;
+  5  begin
+  6  c:=max1(a,b);
+  7  dbms_output.put_line(c);
+  8  end;
+  9  /
+Enter value for a: 22
+old   2: a number(2):=&a;
+new   2: a number(2):=22;
+Enter value for b: 55
+old   3: b number(2):=&b;
+new   3: b number(2):=55;
+55
+
+PL/SQL procedure successfully completed.
+
+------------------------------------------
