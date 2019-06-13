@@ -215,3 +215,29 @@ end;
 3 Kiran 13500
 
 PL/SQL procedure successfully completed.
+
+------------------------------------------
+
+###########
+Declare records 
+###########
+
+declare
+type product is record
+(name varchar(10), id number(3), price number(3));
+p1 product;
+begin
+p1.name:='laptop';
+p1.id:=3;
+p1.price:=65;
+dbms_output.put_line(p1.name);
+dbms_output.put_line(p1.id);
+dbms_output.put_line(p1.price);
+end;
+/
+
+laptop
+3
+65
+
+PL/SQL procedure successfully completed.
