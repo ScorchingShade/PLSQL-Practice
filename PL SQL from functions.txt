@@ -69,7 +69,46 @@ PL/SQL procedure successfully completed.
 
 
 #####################
-
+Factorial of a number using recursive function
 #####################
+
+SQL> create or replace function fact(x in number)
+  2  return number is
+  3  fac number(4):=1;
+  4  begin
+  5  if(x = 0) then
+  6  return fac ;
+  7  else
+  8  fac := (x) * fact (x -1);
+  9  end if;
+ 10  return fac;
+ 11  end;
+ 12  /
+
+Function created.
+
+
+SQL> declare
+  2  input number(2):=&input;
+  3  factorial number(4);
+  4  begin
+  5  factorial := fact(input);
+  6  dbms_output.put_line(factorial);
+  7  end;
+  8  /
+Enter value for input: 2
+old   2: input number(2):=&input;
+new   2: input number(2):=2;
+2
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for input: 4
+old   2: input number(2):=&input;
+new   2: input number(2):=4;
+24
+
+PL/SQL procedure successfully completed.
 
 ------------------------------------------
