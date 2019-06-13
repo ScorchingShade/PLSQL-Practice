@@ -308,17 +308,17 @@ SQL> update worker set sal=18800 where id=4;
 Trigger created to  Dual
 ###########
 
-SQL> create or replace trigger test2
-  2  before insert on login
-  3  for each row
-  4  declare
-  5  u_name varchar2(10);
-  6  begin
-  7  select user into u_name from dual;
-  8  :new.username:=u_name;
-  9  :new.dt:=sysdate;
- 10  end;
- 11  /
+create or replace trigger test2
+before insert on login
+for each row
+declare
+u_name varchar2(10);
+begin
+select user into u_name from dual;
+:new.dt:=sysdate;
+:new.username:=u_name;
+end;
+/
 
 Trigger created.
 
@@ -331,3 +331,39 @@ SYSTEM
 SQL>
 
 -------------------------------------------------------------
+###########
+After Trigger created 
+###########
+SQL> create or replace trigger lti10
+  2  after insert on login
+  3  for each row
+  4  begin
+  5  insert into login1 values(:new.dt,:new.username);
+  6  end;
+  7  /
+
+Trigger created.
+
+SQL> insert into login values('12-may-2019', 'amit');
+
+1 row created.
+
+SQL> insert into login1 values('12-may-2019', 'amit');
+
+1 row created.
+
+SQL> select * from login1;
+
+DT        USERNAME
+--------- ----------
+14-MAY-19 Rashmi
+13-JUN-19 SYSTEM
+12-MAY-19 amit
+
+SQL> select * from login;
+
+DT        USERNAME
+--------- ----------
+14-MAY-19 Rashmi
+13-JUN-19 SYSTEM
+13-JUN-19 SYSTEM
