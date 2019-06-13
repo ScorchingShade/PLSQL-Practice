@@ -28,7 +28,7 @@ PL/SQL procedure successfully completed.
 
 
 #####################
-Count number of rows of worker table
+find min max 
 #####################
 
 SQL> create or replace function max1(x in number, y in number)
@@ -64,5 +64,12 @@ new   3: b number(2):=55;
 55
 
 PL/SQL procedure successfully completed.
+
+------------------------------------------
+
+
+#####################
+
+#####################
 
 ------------------------------------------
