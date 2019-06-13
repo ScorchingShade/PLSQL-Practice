@@ -278,4 +278,30 @@ print(p2);
 end;
 /
 
+###########
+Trigger created to  find sal diff
+###########
+
+
+create or replace trigger
+diff before insert or delete or update on worker for each row
+when(new.id>0)
+declare
+sal_diff number(10):=0;
+begin
+sal_diff:=:new.sal-:old.sal;
+dbms_output.put_line(sal_diff);
+dbms_output.put_line(:new.sal);
+dbms_output.put_line(:old.sal);
+end;
+/
+
+Trigger created.
+SQL> update worker set sal=18800 where id=4;
+-1200
+18800
+20000
+
+1 row updated.
+
 
