@@ -199,3 +199,19 @@ dbms_output.put_line('Sorry no record exists');
 end;
 /
 ------------------------------------------
+
+###########
+Select all the columns from worker table where id is 3
+###########
+
+declare
+lti_record worker%rowtype;
+begin
+select * into lti_record from worker where id=3;
+dbms_output.put_line(lti_record.id||' '||lti_record.name||' '||lti_record.sal);
+end;
+/
+
+3 Kiran 13500
+
+PL/SQL procedure successfully completed.
