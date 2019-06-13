@@ -241,3 +241,41 @@ laptop
 65
 
 PL/SQL procedure successfully completed.
+
+
+
+###########
+Declare two custom records and print using programs 
+###########
+
+
+declare
+type product is record
+(name varchar(10), id number(3), price number(3));
+p1 product;
+p2 product;
+
+procedure print(pp product) is
+begin
+dbms_output.put_line(pp.name);
+dbms_output.put_line(pp.id);
+dbms_output.put_line(pp.price);
+end;
+
+begin
+p1.name:='laptop';
+p1.id:=3;
+p1.price:=65;
+
+p2.name:='tv';
+p2.id:=2;
+p2.price:=455;
+
+print(p1);
+dbms_output.new_line();
+print(p2);
+
+end;
+/
+
+
