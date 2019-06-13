@@ -174,3 +174,28 @@ end;
 Sorry no record exists
 
 PL/SQL procedure successfully completed.
+
+------------------------------------------
+###########
+Custom exception
+###########
+
+
+declare
+id1 worker.id%type:=-1;
+name1 worker.name%type;
+invalid_id exception;
+begin
+if(id1<0) then
+raise invalid_id;
+select name into name1 from worker where id=id1;
+end if;
+exception
+when invalid_id then 
+dbms_output.put_line('Wrong Id');
+
+when no_data_found then
+dbms_output.put_line('Sorry no record exists');
+end;
+/
+------------------------------------------
