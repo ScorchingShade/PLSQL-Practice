@@ -242,7 +242,7 @@ laptop
 
 PL/SQL procedure successfully completed.
 
-
+------------------------------------------
 
 ###########
 Declare two custom records and print using programs 
@@ -277,7 +277,7 @@ print(p2);
 
 end;
 /
-
+------------------------------------------
 ###########
 Trigger created to  find sal diff
 ###########
@@ -304,4 +304,30 @@ SQL> update worker set sal=18800 where id=4;
 
 1 row updated.
 
+###########
+Trigger created to  Dual
+###########
 
+SQL> create or replace trigger test2
+  2  before insert on login
+  3  for each row
+  4  declare
+  5  u_name varchar2(10);
+  6  begin
+  7  select user into u_name from dual;
+  8  :new.username:=u_name;
+  9  :new.dt:=sysdate;
+ 10  end;
+ 11  /
+
+Trigger created.
+
+SQL> select user from dual;
+
+USER
+------------------------------
+SYSTEM
+
+SQL>
+
+-------------------------------------------------------------
