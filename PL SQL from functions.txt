@@ -111,4 +111,47 @@ new   2: input number(2):=4;
 
 PL/SQL procedure successfully completed.
 
+#####################
+ZERO_DIVIDE exception
+#####################
+
+SQL> declare
+  2  a number(2):=0;
+  3  b number(2):=3;
+  4  c number;
+  5  begin
+  6  c:=b/a;
+  7  dbms_output.put_line(c);
+  8  exception
+  9  when ZERO_DIVIDE then
+ 10  dbms_output.put_line('sorry');
+ 11  end;
+ 12  /
+sorry
+
+PL/SQL procedure successfully completed.
+------------------------------------------
+
+#####################
+others exception
+#####################
+
+SQL> declare
+  2  a number(2):=0;
+  3  b number(2):=3;
+  4  c number;
+  5  begin
+  6  c:=b/a;
+  7  dbms_output.put_line(c);
+  8  exception
+  9  when no_data_found then
+ 10  dbms_output.put_line('sorry');
+ 11  when others then
+ 12  dbms_output.put_line('sorry1');
+ 13  end;
+ 14  /
+sorry1
+
+PL/SQL procedure successfully completed.
+
 ------------------------------------------
