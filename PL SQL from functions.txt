@@ -434,3 +434,30 @@ salary of raj is 20000
 
 PL/SQL procedure successfully completed.
 -------------------------------------------------------------
+
+###########
+Associative array accessed by cursor
+###########
+
+ 1  declare
+  2  cursor c1 is select name from worker;
+  3  type namelist is table of varchar2(20)
+  4  index by binary_integer;
+  5  namecoll namelist;
+  6  counter number(2):=0;
+  7  begin
+  8  for n in c1 loop
+  9  counter:=counter+1;
+ 10  namecoll(counter):=n.name;
+ 11  dbms_output.put_line('worker '||counter|| ' is ' ||namecoll(counter));
+ 12  end loop;
+ 13* end;
+SQL> /
+worker 1 is rakesh
+worker 2 is reema
+worker 3 is Kiran
+worker 4 is akshay
+worker 5 is jitesh
+
+PL/SQL procedure successfully completed.
+-------------------------------------------------------------
