@@ -1,0 +1,2407 @@
+SQL> select * from employee;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 abc        abc        06-MAY-97        255 jdg        isg             56552 m
+         2 mnc        mnu        07-MAY-97         12 dec        hui                   m
+         3 hey        delhi      07-MAY-97          3 dec        hui             56000 f
+         4 bye        delhi      09-MAY-97          5 dec        hey             56000 f
+
+SQL>
+SQL>
+SQL> create table emp as select * from employee;
+
+Table created.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 abc        abc        06-MAY-97        255 jdg        isg             56552 m
+         2 mnc        mnu        07-MAY-97         12 dec        hui                   m
+         3 hey        delhi      07-MAY-97          3 dec        hui             56000 f
+         4 bye        delhi      09-MAY-97          5 dec        hey             56000 f
+
+SQL> select name from emp union select name from employee;
+
+NAME
+----------
+abc
+bye
+hey
+mnc
+
+SQL> select city from emp union select city from employee;
+
+CITY
+----------
+abc
+delhi
+mnu
+
+SQL> select city from emp union all select city from employee;
+
+CITY
+----------
+abc
+mnu
+delhi
+delhi
+abc
+mnu
+delhi
+delhi
+
+8 rows selected.
+
+
+SQL> select p.id, p.name, s.quantity from product p left join sales s on p.id=s.pid;
+
+        ID NAME         QUANTITY
+---------- ---------- ----------
+       101 mobile              5
+       104 fridge              6
+       105 microwave          10
+       103 ac
+       102 laptop
+
+SQL> select p.id, p.name, s.quantity from product p right join sales s on p.id=s.pid;
+
+        ID NAME         QUANTITY
+---------- ---------- ----------
+       101 mobile              5
+       104 fridge              6
+       105 microwave          10
+                               3
+                              99
+
+SQL> select p.id, p.name, s.quantity from product p full join sales s on p.id=s.pid;
+
+        ID NAME         QUANTITY
+---------- ---------- ----------
+       101 mobile              5
+       104 fridge              6
+       105 microwave          10
+       103 ac
+       102 laptop
+                               3
+                              99
+
+7 rows selected.
+
+SQL>
+
+SQL>  select p.id, p.name, s.quantity from product p full join sales s on p.id=s.pid;
+
+        ID NAME         QUANTITY
+---------- ---------- ----------
+       101 mobile              5
+       104 fridge              6
+       105 microwave          10
+       103 ac
+       102 laptop
+                               3
+                              99
+
+7 rows selected.
+
+SQL>  select p.id, p.name, s.quantity from product p, sales s where p.id=s.id;
+ select p.id, p.name, s.quantity from product p, sales s where p.id=s.id
+                                                                    *
+ERROR at line 1:
+ORA-00904: "S"."ID": invalid identifier
+
+
+SQL>  select p.id, p.name, s.quantity from product p, sales s where p.id=s.pid;
+
+        ID NAME         QUANTITY
+---------- ---------- ----------
+       101 mobile              5
+       104 fridge              6
+       105 microwave          10
+
+SQL>  select p.id, p.name, s.quantity from product p, sales s where p.id=s.pid(+);
+
+        ID NAME         QUANTITY
+---------- ---------- ----------
+       101 mobile              5
+       104 fridge              6
+       105 microwave          10
+       103 ac
+       102 laptop
+
+SQL>  select p.id, p.name, s.quantity from product p, sales s where p.id(+)=s.pid;
+
+        ID NAME         QUANTITY
+---------- ---------- ----------
+       101 mobile              5
+       104 fridge              6
+       105 microwave          10
+                               3
+                              99
+
+SQL>
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT
+---------- ---------- ---------- --------- ---------- ---------- ----------
+    SALARY G
+---------- -
+         1 abc        abc        06-MAY-97        255 jdg        isg
+     56552 m
+
+         2 mnc        mnu        07-MAY-97         12 dec        hui
+           m
+
+         3 hey        delhi      07-MAY-97          3 dec        hui
+     56000 f
+
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT
+---------- ---------- ---------- --------- ---------- ---------- ----------
+    SALARY G
+---------- -
+         4 bye        delhi      09-MAY-97          5 dec        hey
+     56000 f
+
+
+SQL> set pagesize 40000
+SQL> set linesize 32000
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 abc        abc        06-MAY-97        255 jdg        isg             56552 m
+         2 mnc        mnu        07-MAY-97         12 dec        hui                   m
+         3 hey        delhi      07-MAY-97          3 dec        hui             56000 f
+         4 bye        delhi      09-MAY-97          5 dec        hey             56000 f
+
+SQL>  select e.name from emp e, emp c where e.city=c.city and e.name='hey';
+
+NAME
+----------
+hey
+hey
+
+SQL>  select e.name from emp e, emp c where e.city=c.city and c.name='hey';
+
+NAME
+----------
+hey
+bye
+
+SQL>  select e.name e.city from emp e, emp c where e.city=c.city and c.name='hey';
+ select e.name e.city from emp e, emp c where e.city=c.city and c.name='hey'
+                *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL>
+SQL>  select e.name from emp e, emp c where e.city=c.city and e.name='hey';
+
+NAME
+----------
+hey
+hey
+
+SQL>  select e.name from emp e, emp c where e.city=c.city and c.name='hey';
+
+NAME
+----------
+hey
+bye
+
+SQL>  select c.name from emp e, emp c where e.city=c.city and c.name='hey';
+
+NAME
+----------
+hey
+hey
+
+SQL>  select c.name from emp e, emp c where e.city=c.city and c.name='hey';
+
+NAME
+----------
+hey
+hey
+
+SQL> select name, mgrid from emp;
+
+NAME            MGRID
+---------- ----------
+abc               255
+mnc                12
+hey                 3
+bye                 5
+
+SQL> select id,name, mgrid from emp;
+
+        ID NAME            MGRID
+---------- ---------- ----------
+         1 abc               255
+         2 mnc                12
+         3 hey                 3
+         4 bye                 5
+
+SQL>  select e.name, e.city from emp e, emp c where e.city=c.city and c.name='hey';
+
+NAME       CITY
+---------- ----------
+hey        delhi
+bye        delhi
+
+SQL>  select e.name, e.city from emp e, emp c where e.city=c.city and e.name='hey';
+
+NAME       CITY
+---------- ----------
+hey        delhi
+hey        delhi
+
+SQL>
+
+
+SQL>  insert into emp values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender');
+Enter value for id:
+Enter value for name:
+Enter value for city:
+Enter value for mgrid:
+Enter value for des:
+Enter value for dob:
+Enter value for sal:
+Enter value for dept:
+Enter value for gender:
+old   1:  insert into emp values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender')
+new   1:  insert into emp values(, '', '', , '', '', , '', '')
+ insert into emp values(, '', '', , '', '', , '', '')
+                        *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT
+---------- ---------- ---------- --------- ---------- ---------- ----------
+    SALARY G
+---------- -
+         1 abc        abc        06-MAY-97        255 jdg        isg
+     56552 m
+
+         2 mnc        mnu        07-MAY-97         12 dec        hui
+           m
+
+         3 hey        delhi      07-MAY-97          3 dec        hui
+     56000 f
+
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT
+---------- ---------- ---------- --------- ---------- ---------- ----------
+    SALARY G
+---------- -
+         4 bye        delhi      09-MAY-97          5 dec        hey
+     56000 f
+
+
+SQL> pagesize 40000
+SP2-0734: unknown command beginning "pagesize 4..." - rest of line ignored.
+SQL> set pagesize 40000
+SQL> set linesize 32000
+SQL>
+SQL>
+SQL>
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 abc        abc        06-MAY-97        255 jdg        isg             56552 m
+         2 mnc        mnu        07-MAY-97         12 dec        hui                   m
+         3 hey        delhi      07-MAY-97          3 dec        hui             56000 f
+         4 bye        delhi      09-MAY-97          5 dec        hey             56000 f
+
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>  insert into emp values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender');
+Enter value for id: 5
+Enter value for name: yoyo
+Enter value for city: mnu
+Enter value for mgrid: 09-May-1997
+Enter value for des: 5
+Enter value for dob: jan
+Enter value for sal: hui
+Enter value for dept: 56770
+Enter value for gender: m
+old   1:  insert into emp values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender')
+new   1:  insert into emp values(5, 'yoyo', 'mnu', 09-May-1997, '5', 'jan', hui, '56770', 'm')
+ insert into emp values(5, 'yoyo', 'mnu', 09-May-1997, '5', 'jan', hui, '56770', 'm')
+                                                                   *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL>  insert into emp values(&id, '&name', '&city','&dob', &mgrid, '&des','&dept', &sal, '&gender');
+Enter value for id: 5
+Enter value for name: madhuri
+Enter value for city: mumbai
+Enter value for dob: 22-may-1997
+Enter value for mgrid: 5
+Enter value for des: engg
+Enter value for dept: it
+Enter value for sal: 20000
+Enter value for gender: f
+old   1:  insert into emp values(&id, '&name', '&city','&dob', &mgrid, '&des','&dept', &sal, '&gender')
+new   1:  insert into emp values(5, 'madhuri', 'mumbai','22-may-1997', 5, 'engg','it', 20000, 'f')
+
+1 row created.
+
+SQL> /
+Enter value for id: 6
+Enter value for name: Joe
+Enter value for city: delhi
+Enter value for dob: 12-sep-1993
+Enter value for mgrid: 3
+Enter value for des: engg
+Enter value for dept: accounts
+Enter value for sal: 450000
+Enter value for gender: m
+old   1:  insert into emp values(&id, '&name', '&city','&dob', &mgrid, '&des','&dept', &sal, '&gender')
+new   1:  insert into emp values(6, 'Joe', 'delhi','12-sep-1993', 3, 'engg','accounts', 450000, 'm')
+
+1 row created.
+
+SQL> select e.name , e.des, c.name Manager from emp e, emp c where e.id(+)=c.mgrid;
+
+NAME       DES        MANAGER
+---------- ---------- ----------
+hey        dec        Joe
+hey        dec        hey
+madhuri    engg       madhuri
+madhuri    engg       bye
+                      mnc
+                      abc
+
+6 rows selected.
+
+SQL> select e.name from emp e, emp c where e.id=c.mgrid and c.name='hey';
+
+NAME
+----------
+hey
+
+SQL> alter emp where id=4 set dept='accounts';
+alter emp where id=4 set dept='accounts'
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> alter table emp where id=4 set dept='accounts';
+alter table emp where id=4 set dept='accounts'
+                *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> update table emp where id=4 set dept='accounts';
+update table emp where id=4 set dept='accounts'
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update emp where id=4 set dept='accounts';
+update emp where id=4 set dept='accounts'
+           *
+ERROR at line 1:
+ORA-00971: missing SET keyword
+
+
+SQL> update emp set dept='accounts' where id=4;
+
+1 row updated.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 abc        abc        06-MAY-97        255 jdg        isg             56552 m
+         2 mnc        mnu        07-MAY-97         12 dec        hui                   m
+         3 hey        delhi      07-MAY-97          3 dec        hui             56000 f
+         4 bye        delhi      09-MAY-97          5 dec        accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> update emp set dept='engg', name='kunal' where id=3;
+
+1 row updated.
+
+SQL> update emp set dept='it', name='karan' where id=1;
+
+1 row updated.
+
+SQL> update emp set dept='it', name='kunal' where id=3;
+
+1 row updated.
+
+SQL> update emp set dept='hr', name='rohan' where id=2;
+
+1 row updated.
+
+SQL> update emp set dept='it', name='kunali' where id=3;
+
+1 row updated.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 jdg        it              56552 m
+         2 rohan      mnu        07-MAY-97         12 dec        hr                    m
+         3 kunali     delhi      07-MAY-97          3 dec        it              56000 f
+         4 bye        delhi      09-MAY-97          5 dec        accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> update emp set des='doctor', name='roshni' where id=4;
+
+1 row updated.
+
+SQL> update emp set des='doctor', name='kunali' where id=3;
+
+1 row updated.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 jdg        it              56552 m
+         2 rohan      mnu        07-MAY-97         12 dec        hr                    m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> update emp set des='lawyer' where id=2;
+
+1 row updated.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 jdg        it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr                    m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> update emp set des='lawyer' where id=1;
+
+1 row updated.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr                    m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select e.name , e.des, c.name Manager from emp e, emp c where e.id(+)=c.mgrid;
+
+NAME       DES        MANAGER
+---------- ---------- ----------
+kunali     doctor     Joe
+kunali     doctor     kunali
+madhuri    engg       madhuri
+madhuri    engg       roshni
+                      rohan
+                      karan
+
+6 rows selected.
+
+SQL> select p1.id, p1.price , s1.orderno from product p1 full outer join sales s1 where p1.id=s1.pid;
+select p1.id, p1.price , s1.orderno from product p1 full outer join sales s1 where p1.id=s1.pid
+                                                                             *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select p1.id, p1.price , s1.orderno from product p1 full outer join sales s1 on p1.id=s1.pid;
+
+        ID      PRICE    ORDERNO
+---------- ---------- ----------
+       101      20000        266
+       104      25000        186
+       105       5000        222
+       103      30000
+       102      50000
+                             645
+                             131
+
+7 rows selected.
+
+SQL> select e.name , e.des, c.name Manager from emp e, emp c where e.id(+)=c.mgrid(+);
+select e.name , e.des, c.name Manager from emp e, emp c where e.id(+)=c.mgrid(+)
+                                                                     *
+ERROR at line 1:
+ORA-01468: a predicate may reference only one outer-joined table
+
+
+SQL> select * from product p1, sales s1 ;
+
+        ID NAME            PRICE        PID    ORDERNO   QUANTITY
+---------- ---------- ---------- ---------- ---------- ----------
+       101 mobile          20000        101        266          5
+       101 mobile          20000        104        186          6
+       101 mobile          20000        105        222         10
+       101 mobile          20000        108        645          3
+       101 mobile          20000        110        131         99
+       102 laptop          50000        101        266          5
+       102 laptop          50000        104        186          6
+       102 laptop          50000        105        222         10
+       102 laptop          50000        108        645          3
+       102 laptop          50000        110        131         99
+       103 ac              30000        101        266          5
+       103 ac              30000        104        186          6
+       103 ac              30000        105        222         10
+       103 ac              30000        108        645          3
+       103 ac              30000        110        131         99
+       104 fridge          25000        101        266          5
+       104 fridge          25000        104        186          6
+       104 fridge          25000        105        222         10
+       104 fridge          25000        108        645          3
+       104 fridge          25000        110        131         99
+       105 microwave        5000        101        266          5
+       105 microwave        5000        104        186          6
+       105 microwave        5000        105        222         10
+       105 microwave        5000        108        645          3
+       105 microwave        5000        110        131         99
+
+25 rows selected.
+
+SQL>
+
+
+SQL> select name,sal from emp where sal=(select max(sal) from emp);
+select name,sal from emp where sal=(select max(sal) from emp)
+                               *
+ERROR at line 1:
+ORA-00904: "SAL": invalid identifier
+
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr                    m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> select name,salary from emp where salary=(select max(salary) from emp);
+
+NAME           SALARY
+---------- ----------
+Joe            450000
+
+SQL> select name,salary from emp where max(salary) from emp;
+select name,salary from emp where max(salary) from emp
+                                  *
+ERROR at line 1:
+ORA-00934: group function is not allowed here
+
+
+SQL> select name,salary from emp where max(salary);
+select name,salary from emp where max(salary)
+                                  *
+ERROR at line 1:
+ORA-00934: group function is not allowed here
+
+
+SQL> select name,salary from emp group by max(salary);
+select name,salary from emp group by max(salary)
+                                     *
+ERROR at line 1:
+ORA-00934: group function is not allowed here
+
+
+SQL> select name, max(salary) as Max_SAl from emp group by name;
+
+NAME          MAX_SAL
+---------- ----------
+rohan
+Joe            450000
+karan           56552
+kunali          56000
+madhuri         20000
+roshni          56000
+
+6 rows selected.
+
+SQL> select name, max(salary) as Max_SAl from emp group by salary;
+select name, max(salary) as Max_SAl from emp group by salary
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select name, max(salary) as Max_SAl from emp group by name;
+
+NAME          MAX_SAL
+---------- ----------
+rohan
+Joe            450000
+karan           56552
+kunali          56000
+madhuri         20000
+roshni          56000
+
+6 rows selected.
+
+SQL> select name, max(salary) as Max_SAl from emp group by name fetch first row only;
+select name, max(salary) as Max_SAl from emp group by name fetch first row only
+                                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select top name, max(salary) as Max_SAl from emp group by name;
+select top name, max(salary) as Max_SAl from emp group by name
+       *
+ERROR at line 1:
+ORA-00904: "TOP": invalid identifier
+
+
+SQL> select name, max(salary) as Max_SAl from emp group by salary where rownum=1;
+select name, max(salary) as Max_SAl from emp group by salary where rownum=1
+                                                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select name, max(salary) as Max_SAl from emp group by salary rownum=1;
+select name, max(salary) as Max_SAl from emp group by salary rownum=1
+                                                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select name, max(salary) as Max_SAl from emp where rownum=1 group by salary;
+select name, max(salary) as Max_SAl from emp where rownum=1 group by salary
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select name, max(salary) as Max_SAl from emp group by salary;
+select name, max(salary) as Max_SAl from emp group by salary
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select top name, max(salary) as Max_SAl from emp group by name;
+select top name, max(salary) as Max_SAl from emp group by name
+       *
+ERROR at line 1:
+ORA-00904: "TOP": invalid identifier
+
+
+SQL> select topx(salary) as Max_SAl from emp group by name;
+select topx(salary) as Max_SAl from emp group by name
+       *
+ERROR at line 1:
+ORA-00904: "TOPX": invalid identifier
+
+
+SQL> select dept, max(salary) as Max_SAl from emp group by dept;
+
+DEPT          MAX_SAL
+---------- ----------
+hr
+accounts       450000
+it              56552
+
+SQL> select dept, max(salary) as Max_SAl from emp group by dept;
+
+DEPT          MAX_SAL
+---------- ----------
+hr
+accounts       450000
+it              56552
+
+SQL> select name from emp where (select name, max(salary) as Max_SAl from emp group by name);
+select name from emp where (select name, max(salary) as Max_SAl from emp group by name)
+                                                                                      *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select name from emp where in(select name, max(salary) as Max_SAl from emp group by name);
+select name from emp where in(select name, max(salary) as Max_SAl from emp group by name)
+                           *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select name,dept,salary from emp where salary in(select max(salary) as Max_SAl from emp group by name);
+
+NAME       DEPT           SALARY
+---------- ---------- ----------
+karan      it              56552
+kunali     it              56000
+roshni     accounts        56000
+madhuri    it              20000
+Joe        accounts       450000
+
+SQL> select name,dept,salary from emp where salary in(select max(salary) as Max_SAl from emp group by dept);
+
+NAME       DEPT           SALARY
+---------- ---------- ----------
+karan      it              56552
+Joe        accounts       450000
+
+SQL> select name,dept,salary from emp where salary >(select salary from emp where name='karan' and name='madhuri');
+
+no rows selected
+
+SQL> select name,dept,salary from emp where salary <(select salary from emp where name='karan' and name='madhuri');
+
+no rows selected
+
+SQL> select salary from emp where name='karan' and name='madhuri';
+
+no rows selected
+
+SQL> select salary from emp where name='karan';
+
+    SALARY
+----------
+     56552
+
+SQL> select salary from emp where name='karan' or  name='madhuri';
+
+    SALARY
+----------
+     56552
+     20000
+
+SQL> select name,dept,salary from emp where salary >(select salary from emp where name='karan' or  name='madhuri');
+select name,dept,salary from emp where salary >(select salary from emp where name='karan' or  name='madhuri')
+                                                *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select name,dept,salary from emp where salary =(select salary from emp where salary>'karan');
+select name,dept,salary from emp where salary =(select salary from emp where salary>'karan')
+                                                                                    *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select name from emp where salary > all(select salary from emp where name='karan' and name='madhuri');
+
+NAME
+----------
+karan
+rohan
+kunali
+roshni
+madhuri
+Joe
+
+6 rows selected.
+
+SQL> select name from emp where salary > all(select salary from emp where name in('karan','madhuri'));
+
+NAME
+----------
+Joe
+
+SQL> select name from emp where salary > all(select salary from emp where name='karan', name='madhuri');
+select name from emp where salary > all(select salary from emp where name='karan', name='madhuri')
+                                                                                 *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select name from emp where salary > all(select salary from emp where name='karan','madhuri');
+select name from emp where salary > all(select salary from emp where name='karan','madhuri')
+                                                                                 *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select name from emp where salary > all(select salary from emp where name=('karan','madhuri'));
+select name from emp where salary > all(select salary from emp where name=('karan','madhuri'))
+                                                                         *
+ERROR at line 1:
+ORA-01797: this operator must be followed by ANY or ALL
+
+
+SQL> select name from emp where salary > all(select salary from emp where name in('karan','madhuri'));
+
+NAME
+----------
+Joe
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from emp
+  2  ;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT           SALARY G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr                    m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> alter table emp salary to sal;
+alter table emp salary to sal
+                *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table emp rename column salary to sal;
+
+Table altered.
+
+SQL> select dept, avg(sal) from emp where sal > all(select sal from emp where dept='accounts');
+select dept, avg(sal) from emp where sal > all(select sal from emp where dept='accounts')
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select dept, avg(sal) from emp group by dept where sal > all(select sal from emp where dept='accounts');
+select dept, avg(sal) from emp group by dept where sal > all(select sal from emp where dept='accounts')
+                                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select dept, avg(sal) from emp group by dept having sal > all(select sal from emp where dept='accounts');
+select dept, avg(sal) from emp group by dept having sal > all(select sal from emp where dept='accounts')
+                                                    *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select dept, avg(sal) from emp group by dept having avg(sal) > all(select sal from emp where dept='accounts');
+
+no rows selected
+
+SQL> select dept, avg(sal) from emp group by dept having avg(sal) < all(select sal from emp where dept='accounts');
+
+DEPT         AVG(SAL)
+---------- ----------
+it              44184
+
+
+
+SQL> select * from emp where rownum<6;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr                    m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+
+SQL> select salary from(select salary from emp order by salary desc where rownum < 6);
+select salary from(select salary from emp order by salary desc where rownum < 6)
+                                                               *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select sal from(select sal from emp order by sal desc where rownum < 6);
+select sal from(select sal from emp order by sal desc where rownum < 6)
+                                                      *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select sal from(select sal from emp order by sal desc) where rownum < 6;
+
+       SAL
+----------
+
+    450000
+     56552
+     56000
+     56000
+
+SQL> select sal from emp  where rownum < 6;
+
+       SAL
+----------
+     56552
+
+     56000
+     56000
+     20000
+
+SQL> select sal from emp order by sal  where rownum < 6;
+select sal from emp order by sal  where rownum < 6
+                                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 2)
+
+  MIN(SAL)
+----------
+
+
+SQL> 3
+SP2-0226: Invalid line number
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 1)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 8
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 8)
+
+  MIN(SAL)
+----------
+     20000
+
+SQL> 5
+SP2-0226: Invalid line number
+SQL> 6
+SP2-0226: Invalid line number
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 3
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 3)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 2)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 1)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 4
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 4)
+
+  MIN(SAL)
+----------
+     56552
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 9
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 9)
+
+  MIN(SAL)
+----------
+     20000
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr                    m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 10
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 10)
+
+  MIN(SAL)
+----------
+     20000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 3
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 3)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> update emp where id=2 sal=23000
+  2  ;
+update emp where id=2 sal=23000
+           *
+ERROR at line 1:
+ORA-00971: missing SET keyword
+
+
+SQL> update emp set sal = 20000 where id=2;
+
+1 row updated.
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 1)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 2)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr              20000 m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 10
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 10)
+
+  MIN(SAL)
+----------
+     20000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 700
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 700)
+
+  MIN(SAL)
+----------
+     20000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n-1);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n-1)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 1-1)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < &n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum < 2)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =n);
+select min(sal) from (select * from (select * from emp order by sal desc) where rownum =n)
+                                                                                        *
+ERROR at line 1:
+ORA-00904: "N": invalid identifier
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =1)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =2)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =1)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =2)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n);
+Enter value for n: 3
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =3)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n);
+Enter value for n: 4
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =4)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n);
+Enter value for n: 5
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum =5)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <1)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <2)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 3
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <3)
+
+  MIN(SAL)
+----------
+     56552
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 4
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <4)
+
+  MIN(SAL)
+----------
+     56000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 5
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <5)
+
+  MIN(SAL)
+----------
+     56000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 6
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <6)
+
+  MIN(SAL)
+----------
+     20000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 700
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <700)
+
+  MIN(SAL)
+----------
+     20000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 3
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <3)
+
+  MIN(SAL)
+----------
+     56552
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 1
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <1)
+
+  MIN(SAL)
+----------
+
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 2
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <2)
+
+  MIN(SAL)
+----------
+    450000
+
+SQL> select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n);
+Enter value for n: 5
+old   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <&n)
+new   1: select min(sal) from (select * from (select * from emp order by sal desc) where rownum <5)
+
+  MIN(SAL)
+----------
+     56000
+
+SQL>
+
+
+
+SQL> select name from emp where exists(select id from emp where city='delhi');
+
+NAME
+----------
+karan
+rohan
+kunali
+roshni
+madhuri
+Joe
+
+6 rows selected.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr              20000 m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> select name from emp where exists(select id from emp where city='delhik');
+
+no rows selected
+
+SQL> select name from emp where exists(select id from emp where city='mnu');
+
+NAME
+----------
+karan
+rohan
+kunali
+roshni
+madhuri
+Joe
+
+6 rows selected.
+
+SQL> select name from emp where 1=1;
+
+NAME
+----------
+karan
+rohan
+kunali
+roshni
+madhuri
+Joe
+
+6 rows selected.
+
+SQL> select name, row_number() over(order by sal desc) from emp;
+
+NAME       ROW_NUMBER()OVER(ORDERBYSALDESC)
+---------- --------------------------------
+Joe                                       1
+karan                                     2
+kunali                                    3
+roshni                                    4
+madhuri                                   5
+rohan                                     6
+
+6 rows selected.
+
+SQL> select name, rank() over(order by sal desc) from emp;
+
+NAME       RANK()OVER(ORDERBYSALDESC)
+---------- --------------------------
+Joe                                 1
+karan                               2
+kunali                              3
+roshni                              3
+madhuri                             5
+rohan                               5
+
+6 rows selected.
+
+SQL> select name, dense_rank() over(order by sal desc) from emp;
+
+NAME       DENSE_RANK()OVER(ORDERBYSALDESC)
+---------- --------------------------------
+Joe                                       1
+karan                                     2
+kunali                                    3
+roshni                                    3
+madhuri                                   4
+rohan                                     4
+
+6 rows selected.
+
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr              20000 m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+SQL> create table product1(id number(4) primary key, name varchar2(20), price number(5));
+
+Table created.
+
+SQL> drop table product1;
+
+Table dropped.
+
+SQL> create table product1(id number(4), name varchar2(20), price number(5), CONSTRAINT product_pk primary key(pid));
+create table product1(id number(4), name varchar2(20), price number(5), CONSTRAINT product_pk primary key(pid))
+                                                                                                          *
+ERROR at line 1:
+ORA-00904: "PID": invalid identifier
+
+
+SQL> create table product1(id number(4), name varchar2(20), price number(5), CONSTRAINT product_pk primary key(id));
+
+Table created.
+
+SQL> create table sales1(pid number(4), quantity number(5), CONSTRAINT sales_fk foreign key(id) references product1(id));
+create table sales1(pid number(4), quantity number(5), CONSTRAINT sales_fk foreign key(id) references product1(id))
+                                                                                       *
+ERROR at line 1:
+ORA-00904: "ID": invalid identifier
+
+
+SQL> create table sales1(pid number(4), quantity number(5), CONSTRAINT sales_fk foreign key(pid) references product1(id));
+
+Table created.
+
+SQL> drop sales1;
+drop sales1
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table sales1;
+
+Table dropped.
+
+SQL> create table sales1(pid number(4), quantity number(5), CONSTRAINT sales_fk foreign key(pid) references product1(id) on delete cascade);
+
+Table created.
+
+SQL> insert into product1 values(&id, '&name', &price);
+Enter value for id: 101
+Enter value for name: ac
+Enter value for price: 30000
+old   1: insert into product1 values(&id, '&name', &price)
+new   1: insert into product1 values(101, 'ac', 30000)
+
+1 row created.
+
+SQL> /
+Enter value for id: 102
+Enter value for name: tv
+Enter value for price: 25000
+old   1: insert into product1 values(&id, '&name', &price)
+new   1: insert into product1 values(102, 'tv', 25000)
+
+1 row created.
+
+SQL> /
+Enter value for id: 103
+Enter value for name: mobile
+Enter value for price: 40000
+old   1: insert into product1 values(&id, '&name', &price)
+new   1: insert into product1 values(103, 'mobile', 40000)
+
+1 row created.
+
+SQL> insert into product1 values(&pid, &quantity);
+Enter value for pid:
+Enter value for quantity:
+old   1: insert into product1 values(&pid, &quantity)
+new   1: insert into product1 values(, )
+insert into product1 values(, )
+                            *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL>
+SQL> insert into sales1 values(&pid, &quantity);
+Enter value for pid: 101
+Enter value for quantity: 20
+old   1: insert into sales1 values(&pid, &quantity)
+new   1: insert into sales1 values(101, 20)
+
+1 row created.
+
+SQL> /
+Enter value for pid: 102
+Enter value for quantity: 22
+old   1: insert into sales1 values(&pid, &quantity)
+new   1: insert into sales1 values(102, 22)
+
+1 row created.
+
+SQL> /
+Enter value for pid: 102
+Enter value for quantity: 16
+old   1: insert into sales1 values(&pid, &quantity)
+new   1: insert into sales1 values(102, 16)
+
+1 row created.
+
+SQL> select * from product1, sales1;
+
+        ID NAME                      PRICE        PID   QUANTITY
+---------- -------------------- ---------- ---------- ----------
+       101 ac                        30000        101         20
+       101 ac                        30000        102         22
+       101 ac                        30000        102         16
+       102 tv                        25000        101         20
+       102 tv                        25000        102         22
+       102 tv                        25000        102         16
+       103 mobile                    40000        101         20
+       103 mobile                    40000        102         22
+       103 mobile                    40000        102         16
+
+9 rows selected.
+
+SQL> select * from product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       101 ac                        30000
+       102 tv                        25000
+       103 mobile                    40000
+
+SQL> select * from sales1;
+
+       PID   QUANTITY
+---------- ----------
+       101         20
+       102         22
+       102         16
+
+SQL>
+SQL>  alter table product1 drop primary key;
+ alter table product1 drop primary key
+*
+ERROR at line 1:
+ORA-02273: this unique/primary key is referenced by some foreign keys
+
+
+SQL>
+SQL>  alter table sales1 drop primary key;
+ alter table sales1 drop primary key
+*
+ERROR at line 1:
+ORA-02441: Cannot drop nonexistent primary key
+
+
+SQL>  alter table sales1 drop foreign key;
+ alter table sales1 drop foreign key
+                         *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> delete row from emp where id =101;
+delete row from emp where id =101
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> delete row from product1 where id =101;
+delete row from product1 where id =101
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> delete from product1 where id =101;
+
+1 row deleted.
+
+SQL> select * from sales1;
+
+       PID   QUANTITY
+---------- ----------
+       102         22
+       102         16
+
+SQL> select * from product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       102 tv                        25000
+       103 mobile                    40000
+
+SQL> insert into product1 values(&id, '&name', &price);
+Enter value for id: 101
+Enter value for name: 20
+Enter value for price: ac
+old   1: insert into product1 values(&id, '&name', &price)
+new   1: insert into product1 values(101, '20', ac)
+insert into product1 values(101, '20', ac)
+                                       *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into product1 values(&id, '&name', &price);
+Enter value for id: 101
+Enter value for name: ac
+Enter value for price: 30000
+old   1: insert into product1 values(&id, '&name', &price)
+new   1: insert into product1 values(101, 'ac', 30000)
+
+1 row created.
+
+SQL> insert into sales1 values(&pid, &quantity);
+Enter value for pid: 101
+Enter value for quantity: 22
+old   1: insert into sales1 values(&pid, &quantity)
+new   1: insert into sales1 values(101, 22)
+
+1 row created.
+
+SQL>
+
+
+SQL> delete row from sales1 where id =101;
+delete row from sales1 where id =101
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> delete row from sale1 where id =101;
+delete row from sale1 where id =101
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> delete row from sales1 where id =101;
+delete row from sales1 where id =101
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> show user;
+USER is "SYSTEM"
+SQL> create user prabhleen identified by lti;
+
+User created.
+
+SQL> connect prabhleen/lti;
+ERROR:
+ORA-01045: user PRABHLEEN lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect system/Newuser123;
+Connected.
+SQL> grant create session, create table, create procedure, create view, create sequence, create index to prabhleen;
+grant create session, create table, create procedure, create view, create sequence, create index to prabhleen
+                                                                                    *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> grant create session, create table, create procedure, create view, create sequence to prabhleen;
+
+Grant succeeded.
+
+SQL> grant select, insert, delete, update on system.product1 to prabhleen;
+
+Grant succeeded.
+
+SQL> connect prabhleen/lti;
+Connected.
+SQL> select * from product1;
+select * from product1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from system.product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       102 tv                        25000
+       103 mobile                    40000
+       101 ac                        30000
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+SQL> select * from system.sales1;
+select * from system.sales1
+                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> show user;
+USER is "PRABHLEEN"
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> create table p(location varchar2(30));
+create table p(location varchar2(30))
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+SQL> connect system/Newuser123
+Connected.
+SQL> show user
+USER is "SYSTEM"
+SQL> drop user prabhleen;
+
+User dropped.
+
+SQL> create role r2 identified by r2;
+
+Role created.
+
+SQL> show user
+USER is "SYSTEM"
+SQL> show role
+SP2-0158: unknown SHOW option "role"
+SQL> create user prabhleen identified by lti;
+
+User created.
+
+SQL> grant create session , create table to r2;
+
+Grant succeeded.
+
+SQL> grant select, insetrt, update, delete on system.product to r2;
+grant select, insetrt, update, delete on system.product to r2
+              *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> grant select, insert, update, delete on system.product to r2;
+
+Grant succeeded.
+
+SQL> grant r2 to prabhleen;
+
+Grant succeeded.
+
+SQL> connect prabhleen/lti
+Connected.
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> select * from system.product1;
+select * from system.product1
+                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL>
+SQL> grant select, insetrt, update, delete on system.product1 to r2;
+grant select, insetrt, update, delete on system.product1 to r2
+              *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> connect system/Newuser123;
+Connected.
+SQL> grant select, insetrt, update, delete on system.product1 to r2;
+grant select, insetrt, update, delete on system.product1 to r2
+              *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> grant select, insert, update, delete on system.product1 to r2;
+
+Grant succeeded.
+
+SQL> connect prabhleen/lti;
+Connected.
+SQL> select * from system.product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       102 tv                        25000
+       103 mobile                    40000
+       101 ac                        30000
+
+SQL> connect system/Newuser123
+Connected.
+SQL> revoke r2 from prabhleen;
+
+Revoke succeeded.
+
+SQL> connect prabhleen/lti;
+ERROR:
+ORA-01045: user PRABHLEEN lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL>
+
+
+
+SQL> delete from product where id = 1;
+
+0 rows deleted.
+
+SQL> delete from product1 where id = 101;
+
+1 row deleted.
+
+SQL> savepoint lti;
+
+Savepoint created.
+
+SQL> delete from product2 where id = 102;
+delete from product2 where id = 102
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL>
+SQL> delete from product1 where id = 103;
+
+1 row deleted.
+
+SQL> savepoint lti1;
+
+Savepoint created.
+
+SQL> rollback lti1;
+rollback lti1
+         *
+ERROR at line 1:
+ORA-02181: invalid option to ROLLBACK WORK
+
+
+SQL> rollback to lti1;
+
+Rollback complete.
+
+SQL> rollback to lti;
+
+Rollback complete.
+
+SQL> select * from product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       102 tv                        25000
+       103 mobile                    40000
+
+SQL> insert into product1 values(101, 'ac', 30000);
+
+1 row created.
+
+SQL>
+SQL> insert into sales1 values(101, 22);
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL> select * from product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       101 ac                        30000
+       102 tv                        25000
+       103 mobile                    40000
+
+SQL> savepoint lti3
+  2  ;
+
+Savepoint created.
+
+SQL>
+\
+
+SQL> craete sequence lti start with 10 increment by 5;
+SP2-0734: unknown command beginning "craete seq..." - rest of line ignored.
+SQL> create sequence lti start with 10 increment by 5;
+
+Sequence created.
+
+SQL> select lti.nextval from dual;
+
+   NEXTVAL
+----------
+        10
+
+SQL> select lti.nextval from dual;
+
+   NEXTVAL
+----------
+        15
+
+SQL> select lti.nextval from dual;
+
+   NEXTVAL
+----------
+        20
+
+SQL> select lti.nextval from dual;
+
+   NEXTVAL
+----------
+        25
+
+SQL> select lti.nextval from dual;
+
+   NEXTVAL
+----------
+        30
+
+SQL> select lti.nextval from dual;
+
+   NEXTVAL
+----------
+        35
+
+SQL> select lti.nextval from dual;
+
+   NEXTVAL
+----------
+        40
+
+SQL> insert into product1 values(lti.nextval, 'microwave', 20000);
+
+1 row created.
+
+SQL>
+SQL> select * from product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       101 ac                        30000
+       102 tv                        25000
+       103 mobile                    40000
+        45 microwave                 20000
+
+SQL> delete from product1 where id = 45;
+
+1 row deleted.
+
+SQL> select * from product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       101 ac                        30000
+       102 tv                        25000
+       103 mobile                    40000
+
+SQL> create view lti as select * from product1;
+create view lti as select * from product1
+                                 *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create view lti4 as select * from product1;
+
+View created.
+
+SQL> select * from lti4;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       101 ac                        30000
+       102 tv                        25000
+       103 mobile                    40000
+
+SQL> insert into lti4 values(104, 'microwave', 20000);
+
+1 row created.
+
+SQL> select * from lti4;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       101 ac                        30000
+       102 tv                        25000
+       103 mobile                    40000
+       104 microwave                 20000
+
+SQL> select * from product1;
+
+        ID NAME                      PRICE
+---------- -------------------- ----------
+       101 ac                        30000
+       102 tv                        25000
+       103 mobile                    40000
+       104 microwave                 20000
+
+SQL> create view lti4 as select * from product1 with readonly;
+create view lti4 as select * from product1 with readonly
+                                                *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> create view lti4 as select * from product1 with read only;
+create view lti4 as select * from product1 with read only
+            *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create view lti5 as select * from product1 with read only;
+
+View created.
+
+SQL> insert into lti5 values(104, 'microwave', 20000);
+insert into lti5 values(104, 'microwave', 20000)
+*
+ERROR at line 1:
+ORA-01733: virtual column not allowed here
+
+
+SQL> create index i1 on product(name, price);
+
+Index created.
+
+SQL> create index i1 on product1(name, price);
+create index i1 on product1(name, price)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create index i2 on product1(name, price);
+
+Index created.
+
+SQL> drop index i1
+  2  ;
+
+Index dropped.
+
+
+ select * from emp
+  2  ;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr              20000 m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> select name from emp where ( select count(sal) from emp desc);
+select name from emp where ( select count(sal) from emp desc)
+                                                        *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select name from emp where ( select sal from emp order by sal desc);
+select name from emp where ( select sal from emp order by sal desc)
+                                                 *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select name from emp where (select * from(select sal from emp order by sal desc);
+select name from emp where (select * from(select sal from emp order by sal desc)
+                            *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL>
+SQL> select name from emp where (select * from(select sal from emp order by sal desc));
+select name from emp where (select * from(select sal from emp order by sal desc))
+                                                                                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select sal from (select * from (select * from emp order by sal desc);
+select sal from (select * from (select * from emp order by sal desc)
+                                                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select sal from (select * from (select * from emp order by sal desc));
+
+       SAL
+----------
+    450000
+     56552
+     56000
+     56000
+     20000
+     20000
+
+6 rows selected.
+
+SQL> select sal from (select * from (select * from emp order by sal desc)) where rownum <6;
+
+       SAL
+----------
+    450000
+     56552
+     56000
+     56000
+     20000
+
+SQL> select name from (select * from (select * from emp order by sal desc)) where rownum <6;
+
+NAME
+----------
+Joe
+karan
+kunali
+roshni
+rohan
+
+SQL> select name from (select * from (select * from emp order by sal)) where rownum <6;
+
+NAME
+----------
+rohan
+madhuri
+kunali
+roshni
+karan
+
+SQL>
+SQL>
+SQL> select * from emp;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr              20000 m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> update emp set sal=50 where id = 5 ;
+
+1 row updated.
+
+SQL>
+SQL>
+SQL> select sal from emp where length(sal) > 3;
+
+       SAL
+----------
+     56552
+     20000
+     56000
+     56000
+    450000
+
+SQL> select name from(select * from emp where length(sal) > 3);
+
+NAME
+----------
+karan
+rohan
+kunali
+roshni
+Joe
+
+SQL> select * from emp where ( select count(*) from emp where count < 6);
+select * from emp where ( select count(*) from emp where count < 6)
+                                                                  *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp where ( select count(*) from emp where count(*) < 6);
+select * from emp where ( select count(*) from emp where count(*) < 6)
+                                                         *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select count(*) from emp;
+
+  COUNT(*)
+----------
+         6
+
+SQL> select * from emp < all(select count(*) emp);
+select * from emp < all(select count(*) emp)
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from emp < (select count(*) emp);
+select * from emp < (select count(*) emp)
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from emp < (select count(*) from emp);
+select * from emp < (select count(*) from emp)
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from emp < all(select count(*) from emp);
+select * from emp < all(select count(*) from emp)
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from emp where(select count(*) from emp where count < 6);
+select * from emp where(select count(*) from emp where count < 6)
+                                                                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp where count(id)< (select count(*) from emp);
+select * from emp where count(id)< (select count(*) from emp)
+                        *
+ERROR at line 1:
+ORA-00934: group function is not allowed here
+
+
+SQL> select * from emp group by count(id)< (select count(*) from emp);
+select * from emp group by count(id)< (select count(*) from emp)
+                           *
+ERROR at line 1:
+ORA-00934: group function is not allowed here
+
+
+SQL> select * from emp group by count(id) having count(id)< (select count(*) from emp);
+select * from emp group by count(id) having count(id)< (select count(*) from emp)
+                           *
+ERROR at line 1:
+ORA-00934: group function is not allowed here
+
+
+SQL> select * from emp where(select count(*) from emp where count < 6);
+
+
+
+
+
+
+SQL> set pagesize 40000;
+SQL> set linesize 32000;
+SQL>
+SQL>
+SQL> select * from emp
+  2  ;
+
+        ID NAME       CITY       DOB            MGRID DES        DEPT              SAL G
+---------- ---------- ---------- --------- ---------- ---------- ---------- ---------- -
+         1 karan      abc        06-MAY-97        255 lawyer     it              56552 m
+         2 rohan      mnu        07-MAY-97         12 lawyer     hr              20000 m
+         3 kunali     delhi      07-MAY-97          3 doctor     it              56000 f
+         4 roshni     delhi      09-MAY-97          5 doctor     accounts        56000 f
+         5 madhuri    mumbai     22-MAY-97          5 engg       it              20000 f
+         6 Joe        delhi      12-SEP-93          3 engg       accounts       450000 m
+
+6 rows selected.
+
+SQL> select name from emp o where(select count(*) from emp i where i.name<o.name) < 5;
+
+NAME
+----------
+karan
+rohan
+kunali
+madhuri
+Joe
+
+SQL> select name from emp o where(select count(*) from emp i where i.id<o.id) < 5;
+
+NAME
+----------
+karan
+rohan
+kunali
+roshni
+madhuri
+
+SQL> select name from emp rownum < 5;
+select name from emp rownum < 5
+                     *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select name from emp where rownum < 6;
+
+NAME
+----------
+karan
+rohan
+kunali
+roshni
+madhuri
