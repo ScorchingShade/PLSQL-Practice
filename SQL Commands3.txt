@@ -1,0 +1,526 @@
+DDL statements
+
+ connect system/Newuser123
+
+create table person(id number(3) primary key, name varchar2(10), city varchar2(10)); -- creating table
+
+ desc person; -- showing table
+
+ rename person to person1; -- renaming table
+
+ alter table person1 add salary number(10,100); -- adding column
+
+ alter table person1 modify salary number(6,3); -- to change column width
+
+alter table person1 rename column salary to sal; --to change column name
+
+alter table person1 drop primary key; -- to drop primary key
+
+ select * from tab; -- show all tables
+
+alter table person1 add primary key(id);--add primary key
+
+------Answer to question given-------
+ create table employee(id number(3), name varchar2(10) not null, city varchar2(10), mgrid number(10), des varchar2(30), dob date, sal number(10,3) default 20000, dept varchar2(10), gender varchar2(3) check (gender in('m', 'f')), constraint e_pk primary key(id));
+
+-----Insert Values to a table-----
+ insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender');
+
+----entering values------------
+Enter value for id: 1
+Enter value for name: Karan
+Enter value for city: goa
+Enter value for mgrid: 2
+Enter value for des: engg
+Enter value for dob: 10-may-1994
+Enter value for sal: 60000
+Enter value for dept: it
+Enter value for gender: m
+old   1: insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender')
+new   1: insert into employee values(1, 'Karan', 'goa', 2, 'engg', '10-may-1994', 60000, 'it', 'm')
+
+
+SQL> insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender');
+Enter value for id: 2
+Enter value for name: Suman
+Enter value for city: pune
+Enter value for mgrid: 1
+Enter value for des: engg
+Enter value for dob: 20-nov-1996
+Enter value for sal: 200000
+Enter value for dept: hr
+Enter value for gender: f
+old   1: insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender')
+new   1: insert into employee values(2, 'Suman', 'pune', 1, 'engg', '20-nov-1996', 200000, 'hr', 'f')
+
+1 row created.
+
+SQL> /
+Enter value for id: 3
+Enter value for name: kunal
+Enter value for city: hyderabad
+Enter value for mgrid: 3
+Enter value for des: doc
+Enter value for dob: 20-nov-1996
+Enter value for sal: 1000000
+Enter value for dept: it
+Enter value for gender: m
+old   1: insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender')
+new   1: insert into employee values(3, 'kunal', 'hyderabad', 3, 'doc', '20-nov-1996', 1000000, 'it', 'm')
+
+1 row created.
+
+SQL> /
+Enter value for id: 4
+Enter value for name: Roshni
+Enter value for city: Mumbai
+Enter value for mgrid: 4
+Enter value for des: lawyer
+Enter value for dob: 10-may-1994
+Enter value for sal: 320000
+Enter value for dept: hr
+Enter value for gender: f
+old   1: insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender')
+new   1: insert into employee values(4, 'Roshni', 'Mumbai', 4, 'lawyer', '10-may-1994', 320000, 'hr', 'f')
+
+1 row created.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(3)
+ NAME                                      NOT NULL VARCHAR2(10)
+ CITY                                               VARCHAR2(10)
+ MGRID                                              NUMBER(10)
+ DES                                                VARCHAR2(30)
+ DOB                                                DATE
+ SAL                                                NUMBER(10,3)
+ DEPT                                               VARCHAR2(10)
+ GENDER                                             VARCHAR2(3)
+
+
+SQL> set linesize 32000
+SQL> set pagesize 40000
+SQL> select * from employee;
+
+        ID NAME       CITY            MGRID DES                            DOB                 SAL DEPT       GEN
+---------- ---------- ---------- ---------- ------------------------------ --------- ---------- ---------- ---
+         1 Karan      goa                 2 engg                           10-MAY-94         60000 it         m
+         2 Suman      pune                1 engg                           20-NOV-96        200000 hr         f
+         3 kunal      hyderabad           3 doc                            20-NOV-96       1000000 it         m
+         4 Roshni     Mumbai              4 lawyer                         10-MAY-94        320000 hr         f
+
+
+select * from employee;
+
+        ID NAME       CITY            MGRID DES                            DOB                 SAL DEPT       GEN
+---------- ---------- ---------- ---------- ------------------------------ --------- ---------- ---------- ---
+         1 Karan      goa                 2 engg                           10-MAY-94         60000 it         m
+         2 Suman      pune                1 engg                           20-NOV-96        200000 hr         f
+         3 kunal      hyderabad           3 doc                            20-NOV-96       1000000 it         m
+         4 Roshni     Mumbai              4 lawyer                         10-MAY-94        320000 hr         f
+
+SQL> insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender');
+Enter value for id: 5
+Enter value for name: kunali
+Enter value for city: chandigarh
+Enter value for mgrid: 5
+Enter value for des: pilot
+Enter value for dob: 21-may-2007
+Enter value for sal: 1000000
+Enter value for dept: it
+Enter value for gender: f
+old   1: insert into employee values(&id, '&name', '&city', &mgrid, '&des', '&dob', &sal, '&dept', '&gender')
+new   1: insert into employee values(5, 'kunali', 'chandigarh', 5, 'pilot', '21-may-2007', 1000000, 'it', 'f')
+
+
+SQL> select * from employee;
+
+        ID NAME       CITY            MGRID DES                            DOB              SAL DEPT       GEN
+---------- ---------- ---------- ---------- ------------------------------ --------- ---------- ---------- ---
+         1 Karan      goa                 2 engg                           10-MAY-94      60000 it         m
+         2 Suman      pune                1 engg                           20-NOV-96     200000 hr         f
+         3 kunal      hyderabad           3 doc                            20-NOV-96    1000000 it         m
+         4 Roshni     Mumbai              4 lawyer                         10-MAY-94     320000 hr         f
+         5 kunali     chandigarh          5 pilot                          21-MAY-07    1000000 it         f
+
+
+ update employee set sal = null where id = 2;
+
+1 row updated.
+
+SQL> select * from employee;
+
+        ID NAME       CITY            MGRID DES                            DOB              SAL DEPT       GEN
+---------- ---------- ---------- ---------- ------------------------------ --------- ---------- ---------- ---
+         1 Karan      goa                 2 engg                           10-MAY-94      60000 it         m
+         2 Suman      pune                1 engg                           20-NOV-96            hr         f
+         3 kunal      hyderabad           3 doc                            20-NOV-96    1000000 it         m
+         4 Roshni     Mumbai              4 lawyer                         10-MAY-94     320000 hr         f
+         5 kunali     chandigarh          5 pilot                          21-MAY-07    1000000 it         f
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from employee;
+
+        ID NAME       CITY            MGRID DES                            DOB              SAL DEPT       GEN
+---------- ---------- ---------- ---------- ------------------------------ --------- ---------- ---------- ---
+         1 Karan      goa                 2 engg                           10-MAY-94      60000 it         m
+         2 Suman      pune                1 engg                           20-NOV-96            hr         f
+         3 kunal      hyderabad           3 doc                            20-NOV-96    1000000 it         m
+         4 Roshni     Mumbai              4 lawyer                         10-MAY-94     320000 hr         f
+         5 kunali     chandigarh          5 pilot                          21-MAY-07    1000000 it         f
+
+
+select name,sal from employee where sal between 10000 and 65000;
+
+NAME              SAL
+---------- ----------
+Karan           60000
+
+
+SQL> select name  from employee where city in ('goa', 'pune');
+
+NAME
+----------
+Karan
+Suman
+
+SQL> select name  from employee where city like 'pune' ;
+
+NAME
+----------
+Suman
+
+
+SQL> select name from employee where name like 'k%';
+
+NAME
+----------
+kunal
+kunali
+
+SQL> select name from employee where name like 'k_';
+
+no rows selected
+
+SQL> select name from employee where name like 'k____';
+
+NAME
+----------
+kunal
+
+
+SQL> select name from employee where name like '__r%';
+
+NAME
+----------
+Karan
+
+ select name from employee where sal is null;
+
+NAME
+----------
+Suman
+
+
+select name from employee where des='engg' and sal>30000;
+
+NAME
+----------
+Karan
+
+
+
+SQL> select name from employee where not des='engg';
+
+NAME
+----------
+kunal
+Roshni
+kunali
+
+SQL> select name from employee where des not in 'engg';
+
+NAME
+----------
+kunal
+Roshni
+kunali
+
+
+
+
+
+
+
+
+SQL>
+SQL> select upper('pune') from dual;
+
+UPPE
+----
+PUNE
+
+
+SQL> select instr('pune', 'p') from dual;
+
+INSTR('PUNE','P')
+-----------------
+                1
+
+SQL> select instr('pune', 'r') from dual;
+
+INSTR('PUNE','R')
+-----------------
+                0
+
+SQL> select rtrim('good morning', 'morning') from dual;
+
+RTRIM
+-----
+good
+
+SQL> select lpad('lti', 6, '***') from dual;
+
+LPAD('
+------
+***lti
+
+
+ select substr('helloworld', 3,6) from dual;
+
+SUBSTR
+------
+llowor
+
+
+> select round(23.889, 2) from dual;
+
+ROUND(23.889,2)
+---------------
+          23.89
+
+SQL> select round(23.88876879, 2) from dual;
+
+ROUND(23.88876879,2)
+--------------------
+               23.89
+
+
+SQL> select floor(23.88876879) from dual;
+
+FLOOR(23.88876879)
+------------------
+                23
+
+SQL> select ceil(23.88876879) from dual;
+
+CEIL(23.88876879)
+-----------------
+               24
+
+SQL> select add_months('20-mar-2006',5) from dual;
+
+ADD_MONTH
+---------
+20-AUG-06
+
+SQL> select months_between('20-mar-2006','15-march-2009') from dual;
+
+MONTHS_BETWEEN('20-MAR-2006','15-MARCH-2009')
+---------------------------------------------
+                                    -35.83871
+
+SQL> select months_between('20-mar-2016','15-march-2009') from dual;
+
+MONTHS_BETWEEN('20-MAR-2016','15-MARCH-2009')
+---------------------------------------------
+                                   84.1612903
+
+SQL> select next_day('10-june-2019','sunday') from dual;
+
+NEXT_DAY(
+---------
+16-JUN-19
+
+select last_day('10-june-2019') from dual;
+
+LAST_DAY(
+---------
+30-JUN-19
+
+ SELECT TO_CHAR
+  2      (SYSDATE, 'MM-DD-YYYY HH24:MI:SS') "NOW"
+  3       FROM DUAL;
+
+NOW
+-------------------
+06-10-2019 16:39:50
+
+
+ SELECT TO_CHAR
+  2      (SYSDATE, 'yy') "NOW"
+  3       FROM DUAL;
+
+NO
+--
+19
+
+SQL>
+
+
+SQL> select name from employee where dob like '%96';
+
+NAME
+----------
+Suman
+kunal
+
+SQL> select * from employee;
+
+        ID NAME       CITY            MGRID DES                            DOB              SAL DEPT       GEN
+---------- ---------- ---------- ---------- ------------------------------ --------- ---------- ---------- ---
+         1 Karan      goa                 2 engg                           10-MAY-94      60000 it         m
+         2 Suman      pune                1 engg                           20-NOV-96            hr         f
+         3 kunal      hyderabad           3 doc                            20-NOV-96    1000000 it         m
+         4 Roshni     Mumbai              4 lawyer                         10-MAY-94     320000 hr         f
+         5 kunali     chandigarh          5 pilot                          21-MAY-07    1000000 it         f
+
+
+
+SQL> select name from employee where to_char(dob, 'yyyy')=1996;
+
+NAME
+----------
+Suman
+kunal
+
+SQL> select nvl(null,20) from dual;
+
+NVL(NULL,20)
+------------
+          20
+
+SQL> select nvl(21,20) from dual;
+
+NVL(21,20)
+----------
+        21
+
+SQL> select nvl2(21,20,24) from dual;
+
+NVL2(21,20,24)
+--------------
+            20
+
+SQL> select nvl2(null,20,24) from dual;
+
+NVL2(NULL,20,24)
+----------------
+              24
+
+
+
+SQL> select coalesce(null,20,24) from dual;
+
+COALESCE(NULL,20,24)
+--------------------
+                  20
+
+SQL> select coalesce(null,null) from dual;
+
+C
+-
+
+
+ select greatest(12,13,1,-4) from dual;
+
+GREATEST(12,13,1,-4)
+--------------------
+                  13
+
+
+SQL> select count(*) from employee where des='engg';
+
+  COUNT(*)
+----------
+         2
+
+SQL> select count(*) engineers from employee where des='engg'; //here engineers is alias
+
+ ENGINEERS
+----------
+         2
+
+SQL> select sal from employee order by sal;
+
+       SAL
+----------
+     60000
+    320000
+   1000000
+   1000000
+
+
+SQL> select * from employee order by sal;
+
+        ID NAME       CITY            MGRID DES                            DOB              SAL DEPT       GEN
+---------- ---------- ---------- ---------- ------------------------------ --------- ---------- ---------- ---
+         1 Karan      goa                 2 engg                           10-MAY-94      60000 it         m
+         4 Roshni     Mumbai              4 lawyer                         10-MAY-94     320000 hr         f
+         5 kunali     chandigarh          5 pilot                          21-MAY-07    1000000 it         f
+         3 kunal      hyderabad           3 doc                            20-NOV-96    1000000 it         m
+         2 Suman      pune                1 engg                           20-NOV-96            hr         f
+
+
+ select distinct des, name from employee order by name;
+
+DES                            NAME
+------------------------------ ----------
+engg                           Karan
+lawyer                         Roshni
+engg                           Suman
+doc                            kunal
+pilot                          kunali
+
+SQL> select distinct des from employee order by des;
+
+DES
+------------------------------
+doc
+engg
+lawyer
+pilot
+
+SQL> select distinct des from employee order by des desc;
+
+DES
+------------------------------
+pilot
+lawyer
+engg
+doc
+
+
+
+
+
+SQL> select dept,sum(sal) as total_sal from employee group by dept;
+
+DEPT        TOTAL_SAL
+---------- ----------
+hr             320000
+it            2060000
+
+ select dept,count(dept) from employee group by dept having count(dept)<=2;
+
+DEPT       COUNT(DEPT)
+---------- -----------
+hr                   2
+
+
+
+
